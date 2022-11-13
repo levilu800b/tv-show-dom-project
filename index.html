@@ -12,14 +12,28 @@
 			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
 			crossorigin="anonymous"
 		/>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
-		<div id="root"></div>
+		<nav class="navbar bg-light">
+			<div class="container-fluid">
+				<img id="pageLogo" src="favicon.ico" alt="logo" onclick="setup()" />
+				<form id="search" class="d-flex" role="search">
+					<input
+						class="form-control me-2"
+						type="search"
+						placeholder="Search"
+						aria-label="Search"
+					/>
+					<button class="btn btn-outline-success" type="submit">Search</button>
+				</form>
+			</div>
+		</nav>
+		<div class="container" id="cards"></div>
 		<!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
 		<script src="episodes.js"></script>
 		<!-- Loads a provided function called makePageForEpisodes(episodeList) which makes page for given list of episodes -->
 		<script src="shows.js"></script>
-
 		<!-- Loads YOUR javascript code -->
 		<script src="script.js"></script>
 		<script
