@@ -91,83 +91,112 @@ function makePageForShows(showList) {
 
 makePageForShows(allShows);
 
-function searchEpisodes() {
+eSearch.addEventListener('input', () => {
     const searchValue = eSearch.value.toLowerCase();
     const filteredEpisodes = allEpisodes.filter(episode => {
         return episode.name.toLowerCase().includes(searchValue) || episode.summary.toLowerCase().includes(searchValue);
     });
     makePageForEpisodes(filteredEpisodes);
-}
+});
 
-searchEpisodes();
-
-function searchShows() {
-    const searchValue = eSearch.value.toLowerCase();
-    const filteredShows = allShows.filter(show => {
-        return show.name.toLowerCase().includes(searchValue) || show.summary.toLowerCase().includes(searchValue);
-    });
-    makePageForShows(filteredShows);
-}
-
-searchShows();
-
-function populateEpisodesDropdown() {
-    allEpisodes.forEach(episode => {
-        const option = document.createElement('option');
-        option.innerText = `S${episode.season.toString().padStart(2, '0')}E${episode.number.toString().padStart(2, '0')} - ${episode.name}`;
-        eSelect.appendChild(option);
-    });
-}
-
-populateEpisodesDropdown();
-
-function populateShowsDropdown() {
-    allShows.forEach(show => {
-        const option = document.createElement('option');
-        option.innerText = show.name;
-        shSelect.appendChild(option);
-    });
-}
-
-populateShowsDropdown();
-
-function filterEpisodesBySeason() {
-    const season = eSelect.value.split(' ')[0];
+eSelect.addEventListener('change', () => {
+    const selectedEp = eSelect.value;
     const filteredEpisodes = allEpisodes.filter(episode => {
-        return episode.season.toString().padStart(2, '0') === season.split('')[1];
+        return episode.name === selectedEp;
     });
     makePageForEpisodes(filteredEpisodes);
-}
+});
 
-filteredEpisodesBySeason();
-
-function filterShowsByGenre() {
-    const genre = shSelect.value;
+shSelect.addEventListener('change', () => {
+    const selectedSh = shSelect.value;
     const filteredShows = allShows.filter(show => {
-        return show.genres.includes(genre);
+        return show.name === selectedSh;
     });
     makePageForShows(filteredShows);
+});
+
+function filterEpisodes(word, list) {
+	// only return episodes that include the searched input value in their summary or name (for search)
+	return list.filter((ep) => {
+		if (ep.genres) {
+			const genres = ep.genres.join(' ').toLowerCase();
+			return (
+				ep.name.toLowerCase().includes(word) ||
+				ep.summary.toLowerCase().includes(word) ||
+				genres.includes(word)
+			);
+		} else {
+			return (
+				ep.name.toLowerCase().includes(word) ||
+				ep.summary.toLowerCase().includes(word)
+			);
+		}
+	});
 }
 
-filteredShowsByGenre();
-
-function filterShowsByRating() {
-    const rating = shSelect.value;
-    const filteredShows = allShows.filter(show => {
-        return show.rating.average >= rating;
-    });
-    makePageForShows(filteredShows);
+function render(word = '', list, callback) {
+	// render the page according the search input value
+	rootElem.innerHTML = '';
+	word = cleanUpWord(word);
+	const filtered = filterEpisodes(word, list);
+	totalDisplayingEpsP.innerText = `Displaying ${filtered.length}/${list.length} episodes.`;
+	callback(filtered);
+	return filtered;
 }
 
-filteredShowsByRating();
-
-function filterShowsByStatus() {
-    const status = shSelect.value;
-    const filteredShows = allShows.filter(show => {
-        return show.status === status;
-    });
-    makePageForShows(filteredShows);
+function formatEp(num) {
+	// format the number suitable for Season - Episode format
+	const str = num.toString();
+	return str.padStart(2, '0');
 }
 
-filteredShowsByStatus();
+function createEpDropDownSelectEpMenu(episodeList) {
+	// creates drop down select menu with each option a link to the episode
+	eSelect.innerHTML = '';
+	episodeList.forEach((ep) => {
+		const option = document.createElement('option'); // create option element for each ep and fill the select dropdown
+		option.value = `${ep.url}`;
+		eSelect.add(option);
+		option.innerHTML = `S${formatEp(ep.season)}E${formatEp(ep.number)} - ${
+			ep.name
+		}`;
+	});
+}
 
+function updateSelectShowMenu(showId) {
+	const option = document.getElementById(showId);
+	option.setAttribute('selected', true);
+}
+
+function createShowDropDownSelectEpMenu(showList) {
+	// creates drop down show select menu with each option calls and api to the relevant TV show
+	shSelect.innerHTML = '';
+	const sortedShowListInAlphabeticalOrder = showList.sort((a, b) =>
+		a.name.localeCompare(b.name),
+	);
+	sortedShowListInAlphabeticalOrder.forEach((show) => {
+		const option = document.createElement('option'); // create option element for each ep and fill the select dropdown
+		option.value = `https://api.tvmaze.com/shows/${show.id}/episodes`;
+		option.id = `${show.id}`;
+		shSelect.add(option);
+		option.innerHTML = `${show.name}`;
+	});
+}
+
+function cleanUpWord(word) {
+	// format the input value (for the search bar) (toLowerCase and trim)
+	return word.trim().toLowerCase();
+}
+
+function setup() {
+	makeShowCardForEachShow(allShows);
+	createShowDropDownSelectEpMenu(allShows);
+
+	epSearch.addEventListener('input', () => {
+		const input = eSearch.value;
+		render(input, allShows, makeShowCardForEachShow);
+		createShowDropDownSelectEpMenu(filterEpisodes(input, allShows));
+	});
+}
+
+window.onload = setup;
