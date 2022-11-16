@@ -1,139 +1,142 @@
 :root {
-  --pageBgC: #002855;
-  --pageToLinearC: #000814;
-  --epContainerBgC: #001233;
-  --epContainerBorder: #002855;
-  --epContainerHover : #002855;
-  --epHeaderBorder: #0077b6;
-  --gridGap: 15px 10px;
-  --font: "Candara";
-  --fontWeight: 500;
-  --lineHeight: 25px;
+	--pageBgC: #002855;
+	--pageToLinearC: #000814;
+	--epContainerBgC: #001233;
+	--epContainerBorder: #002855;
+	--epContainerHover: #002855;
+	--epHeaderBorder: #0077b6;
+	--gridGap: 15px 10px;
+	--font: 'Candara';
+	--fontWeight: 500;
+	--lineHeight: 25px;
 }
 
-*{
-  margin: 0;
-  padding: 0;
-  font-family: var(--font);
-  box-sizing: border-box;
+* {
+	margin: 0;
+	padding: 0;
+	font-family: var(--font);
+	box-sizing: border-box;
 }
 
 body {
-  margin: 0 10px;
-  background: linear-gradient(to right, var(--pageBgC), var(--pageToLinearC));
+	margin: 0 10px;
+	background: linear-gradient(to right, var(--pageBgC), var(--pageToLinearC));
 }
 
 .navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  color: white;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	color: white;
 }
 
 #eDropdown {
-  display: none;
+	display: none;
 }
 
 #pageLogo {
-  cursor: pointer;
+	cursor: pointer;
 }
 
-.eSearch, select {
-  padding: 10px;
-  margin: 10px 5px;
-  border: 2px solid var(--epHeaderBorder);
-  width: 20vw;
-  font-size: 16px;
+.eSearch,
+select {
+	padding: 10px;
+	margin: 10px 5px;
+	border: 2px solid var(--epHeaderBorder);
+	width: 20vw;
+	font-size: 16px;
 }
 
 #root {
-  text-align: center;
-  display: grid;
-  grid-template-areas: 1fr;
-  gap: 20px;
-  justify-items: center;
-  font-weight: var(--fontWeight);
-  line-height: var(--lineHeight);
-  margin-bottom: 30px;
-  padding-bottom: 50px;
+	text-align: center;
+	display: grid;
+	grid-template-areas: 1fr;
+	gap: 20px;
+	justify-items: center;
+	font-weight: var(--fontWeight);
+	line-height: var(--lineHeight);
+	margin-bottom: 30px;
+	padding-bottom: 50px;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
-  display: block;
+	color: inherit;
+	text-decoration: none;
+	display: block;
 }
 
 #footerTvMazeLink {
-  color: var(--epContainerBgC);
+	color: var(--epContainerBgC);
 }
 
 #footerTvMazeLink:hover {
-  font-weight: 600;
+	font-weight: 600;
 }
 
 .shContainer {
-  border: 2px solid var(--epContainerBorder);
-  border-radius: 5px;
-  background-color: var(--epContainerBgC);
-  padding: 10px;
-  color: white;
-  cursor: pointer;
+	border: 2px solid var(--epContainerBorder);
+	border-radius: 5px;
+	background-color: var(--epContainerBgC);
+	padding: 10px;
+	color: white;
+	cursor: pointer;
 }
 
 .showCards {
-  color: white;
+	color: white;
 }
 
 .shContainer:hover {
-  background-color: var(--epContainerHover);
-  color: white;
+	background-color: var(--epContainerHover);
+	color: white;
 }
 
 .epLink {
-  text-decoration: none;
-  color: #000;
-  display: block;
+	text-decoration: none;
+	color: #000;
+	display: block;
 }
 
-.epHeader, .showName {
-  padding: 15px 10px;
+.epHeader,
+.showName {
+	padding: 15px 10px;
 }
 
-.epImage, .showImage {
-  padding: 15px;
+.epImage,
+.showImage {
+	padding: 15px;
 }
 
-footer{
-  position: inherit;
-  padding: 36px;
-  text-align: center;
-  background-color: black;
-  color: white;
+footer {
+	position: inherit;
+	padding: 36px;
+	text-align: center;
+	background-color: black;
+	color: white;
 }
 
 @media screen and (min-width: 750px) {
-  #root {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--gridGap);
-  }
-  .shContainer {
-    width: 40vw;
-    margin: 10px;
-    padding: 10px;
-    justify-items: center;
-  }
+	#root {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--gridGap);
+	}
+	.shContainer {
+		width: 40vw;
+		margin: 10px;
+		padding: 10px;
+		justify-items: center;
+	}
 }
 
 @media screen and (min-width: 1200px) {
-   #root {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: var(--gridGap);
-  }
-  .shContainer {
-    width: 23vw;
-  }
+	#root {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: var(--gridGap);
+	}
+	.shContainer {
+		width: 23vw;
+	}
 }
