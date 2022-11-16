@@ -28,7 +28,7 @@ body {
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
-	color: white;
+	color: rgb(26, 24, 24);
 }
 
 #eDropdown {
